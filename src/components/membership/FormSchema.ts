@@ -1,4 +1,3 @@
-
 import * as z from "zod";
 
 // Define schema for form validation
@@ -14,6 +13,8 @@ export const formSchema = z.object({
   ward: z.string().min(1, "Ward is required"),
   pollingStation: z.string().min(1, "Polling station is required"),
   membershipType: z.string().min(1, "Membership type is required"),
+  ethnicity: z.string().min(1, "Ethnicity is required"),
+  hasDisability: z.boolean().default(false),
 });
 
 export type FormData = z.infer<typeof formSchema>;
