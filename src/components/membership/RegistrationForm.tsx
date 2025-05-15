@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+
+
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -17,12 +19,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { formSchema, FormData } from "./FormSchema";
 import { submitToGoogleSheet } from "./GoogleSheetSubmitter";
-import { sendWhatsAppMessage } from "./WhatsAppSender";
-import SubmissionMethod from "./SubmissionMethod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// County and constituency data
 // County and constituency data
 const countyConstituencyMap: Record<string, string[]> = {
   "Mombasa": ["Changamwe", "Jomvu", "Kisauni", "Nyali", "Likoni", "Mvita"],
@@ -78,21 +77,15 @@ const countyConstituencyMap: Record<string, string[]> = {
 // List of Kenya counties in alphabetical order
 const counties = Object.keys(countyConstituencyMap).sort();
 
-// List of Kenyan tribes/ethnic groups
-const ethnicGroups = [
-  "Kikuyu", "Luhya", "Kalenjin", "Luo", "Kamba", "Kisii", "Meru", 
-  "Mijikenda", "Somali", "Maasai", "Turkana", "Samburu", "Pokot", 
-  "Taita", "Embu", "Tharaka", "Mbeere", "Kuria", "Suba", "Iteso", 
-  "Borana", "Gabra", "Rendile", "Orma", "Burji", "Nubian", 
-  "Asian", "European", "Arab", "Other"
+// List of common ethnicities in Kenya
+const ethnicities = [
+  "Kikuyu", "Luhya", "Kalenjin", "Luo", "Kamba", "Kisii", "Mijikenda", 
+  "Meru", "Turkana", "Maasai", "Teso", "Embu", "Taita", "Kuria", 
+  "Samburu", "Tharaka", "Pokomo", "Pokot", "Nubi", "Borana", "Somali", 
+  "Rendille", "El Molo", "Swahili", "Arab", "Asian", "European", "Other"
 ].sort();
 
-interface RegistrationFormProps {
-  submissionMethod: "both" | "form" | "whatsapp";
-  setSubmissionMethod: (method: "both" | "form" | "whatsapp") => void;
-}
-
-const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: RegistrationFormProps) => {
+const RegistrationForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedConstituencies, setSelectedConstituencies] = useState<string[]>([]);
 
@@ -103,6 +96,8 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
       fullName: "",
       idNumber: "",
       gender: "",
+      ethnicity: "",
+      disability: "",
       maritalStatus: "",
       address: "",
       contact: "",
@@ -111,8 +106,6 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
       ward: "",
       pollingStation: "",
       membershipType: "",
-      ethnicity: "",
-      hasDisability: "",
     },
   });
 
@@ -120,7 +113,7 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
   const selectedCounty = form.watch("county");
   
   // Update constituencies when county changes
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedCounty) {
       const constituencies = countyConstituencyMap[selectedCounty] || [];
       setSelectedConstituencies(constituencies);
@@ -129,25 +122,15 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
     }
   }, [selectedCounty, form]);
 
-  // Combined submit handler
+  // Submit handler
   const onSubmit = async (data: FormData) => {
     setIsSubmitting(true);
     
     try {
-      let googleSheetsSuccess = true;
+      // Submit to Google Sheets
+      const success = await submitToGoogleSheet(data);
       
-      // Submit to Google Sheets if selected
-      if (submissionMethod === "form" || submissionMethod === "both") {
-        googleSheetsSuccess = await submitToGoogleSheet(data);
-      }
-      
-      // Send WhatsApp message if selected
-      let whatsappSuccess = true;
-      if (submissionMethod === "whatsapp" || submissionMethod === "both") {
-        whatsappSuccess = sendWhatsAppMessage(data);
-      }
-      
-      if (googleSheetsSuccess || whatsappSuccess) {
+      if (success) {
         toast.success("Registration submitted successfully!");
         form.reset();
       } else {
@@ -165,11 +148,6 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
     <div className="bg-white rounded-xl shadow-xl p-6 md:p-8">
       <h3 className="text-xl font-bold mb-6">Membership Registration</h3>
       
-      <SubmissionMethod 
-        submissionMethod={submissionMethod}
-        setSubmissionMethod={setSubmissionMethod}
-      />
-      
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -180,7 +158,7 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
                 <FormItem>
                   <FormLabel>Full Names</FormLabel>
                   <FormControl>
-                    <Input placeholder="Christopher Waweru" {...field} />
+                    <Input placeholder="John Doe" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -249,6 +227,60 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
                       <SelectItem value="widowed">Widowed</SelectItem>
                     </SelectContent>
                   </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="ethnicity"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Ethnicity</FormLabel>
+                  <Select onValueChange={field.onChange} value={field.value}>
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select ethnicity" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent className="max-h-[200px] overflow-y-auto">
+                      {ethnicities.map((ethnicity) => (
+                        <SelectItem key={ethnicity} value={ethnicity.toLowerCase()}>
+                          {ethnicity}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+              control={form.control}
+              name="disability"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Do you have any disability?</FormLabel>
+                  <FormControl>
+                    <RadioGroup
+                      value={field.value}
+                      onValueChange={field.onChange}
+                      className="flex gap-4"
+                    >
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="yes" id="disability-yes" />
+                        <Label htmlFor="disability-yes">Yes</Label>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <RadioGroupItem value="no" id="disability-no" />
+                        <Label htmlFor="disability-no">No</Label>
+                      </div>
+                    </RadioGroup>
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -374,60 +406,6 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
               )}
             />
           </div>
-          
-          {/* New Ethnicity Field */}
-          <FormField
-            control={form.control}
-            name="ethnicity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Ethnicity/Tribe</FormLabel>
-                <Select onValueChange={field.onChange} value={field.value}>
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select your ethnic group" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="max-h-[200px] overflow-y-auto">
-                    {ethnicGroups.map((group) => (
-                      <SelectItem key={group} value={group}>
-                        {group}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          
-          {/* New Disability Field */}
-          <FormField
-            control={form.control}
-            name="hasDisability"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Do you have any disability?</FormLabel>
-                <FormControl>
-                  <RadioGroup
-                    value={field.value}
-                    onValueChange={field.onChange}
-                    className="flex gap-4"
-                  >
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="yes" id="disability-yes" />
-                      <Label htmlFor="disability-yes">Yes</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="no" id="disability-no" />
-                      <Label htmlFor="disability-no">No</Label>
-                    </div>
-                  </RadioGroup>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
           
           <FormField
             control={form.control}
