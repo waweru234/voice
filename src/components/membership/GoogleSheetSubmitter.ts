@@ -1,11 +1,10 @@
-
 import { FormData } from "./FormSchema";
 
 // Google Sheet submission function
 export const submitToGoogleSheet = async (data: FormData) => {
   // This is the URL for your Google Apps Script web app that will handle the form submission
   // You'll need to replace this with your actual deployed Google Apps Script web app URL
-  const googleScriptUrl = "https://script.google.com/macros/s/AKfycbwfRk3FYl5eitOwKcclh4_L64xWm9SftSRStj3NX766nqnO1Jezv1JuITkO3jbRjH2r/exec";
+  const googleScriptUrl = "https://script.google.com/macros/s/AKfycbzuSJ798kji7ANLr6qlxS24CjsuAwhXWJDWzWP9YUPRBHvVkANSNTjW0AFGOySvND9g/exec";
   
   try {
     // Create a modified data object with the formatted phone number
