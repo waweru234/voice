@@ -14,7 +14,7 @@ export const formSchema = z.object({
   pollingStation: z.string().min(1, "Polling station is required"),
   membershipType: z.string().min(1, "Membership type is required"),
   ethnicity: z.string().min(1, "Ethnicity is required"),
-  hasDisability: z.boolean().default(false),
+  hasDisability: z.string().min(1, "Please specify disability status"),
 });
 
 export type FormData = z.infer<typeof formSchema>;
