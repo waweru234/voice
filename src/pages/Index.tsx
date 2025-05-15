@@ -44,7 +44,8 @@ const Index = () => {
         <Message />
         <Leadership />
         <Gallery />
-        
+        <Donate />
+        <MembershipForm />
         {/* Contact/Call to Action Section (Join the Movement) */}
         <section id="contact" className="py-20 bg-gradient-to-r from-party-gold to-party-hotpink relative overflow-hidden">
           <div className="absolute inset-0 opacity-15">
@@ -71,8 +72,7 @@ const Index = () => {
           </div>
         </section>
         
-        <Donate />
-        <MembershipForm />
+        
         
         <footer className="bg-gray-900 text-white py-16">
           <div className="container mx-auto px-6">
