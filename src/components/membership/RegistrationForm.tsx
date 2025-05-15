@@ -169,7 +169,7 @@ const RegistrationForm = ({ submissionMethod, setSubmissionMethod }: Registratio
                 <FormItem>
                   <FormLabel>Full Names</FormLabel>
                   <FormControl>
-                    <Input placeholder="John Doe" {...field} />
+                    <Input placeholder="Christopher Waweru" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
