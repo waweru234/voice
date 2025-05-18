@@ -65,7 +65,7 @@ export default {
 				},
 				// Party colors - refining the palette
 				party: {
-					hotpink: '#FF69B4',
+					hotpink: '#FF0B93',
 					lightblue: '#87CEFA',
 					green: '#4CAF50',
 					brown: '#795548',
