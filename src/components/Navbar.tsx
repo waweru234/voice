@@ -46,7 +46,7 @@ const Navbar = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="text-party-hotpink text-2xl font-bold tracking-wider">
+              <div className="text-party-hotpink/30 text-2xl font-bold tracking-wider">
                 VOICES OF KENYA
               </div>
             </div>
