@@ -41,7 +41,7 @@ const Navbar = () => {
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-full overflow-hidden">
                 <img 
-                  src="/lovable-uploads/2cf903d4-8b6e-4e88-b487-edc75db7e4a9.png" 
+                  src="/lovable-uploads/vok.png" 
                   alt="Forty Seven Voices of Kenya" 
                   className="w-full h-full object-cover"
                 />
