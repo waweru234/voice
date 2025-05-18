@@ -59,3 +59,11 @@
   align-items: center;
   justify-content: center;
 }
+h1, h2, h3, h4, h5, h6 {
+  @apply font-cinzel;
+}
+
+/* Create utility class for Cinzel font */
+.font-cinzel {
+  font-family: 'Cinzel', serif;
+}
