@@ -17,7 +17,7 @@ const Hero = () => {
       </div>
       
       {/* Enhanced top accent - made thicker */}
-      <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-party-gold via-party-hotpink to-party-green"></div>
+      <div className="absolute w-full h-2 bg-gradient-to-r from-party-gold via-party-hotpink to-party-green"></div>
       
       <div className="container mx-auto px-6 relative z-10">
         <div className="flex flex-col lg:flex-row items-center gap-12">
