@@ -96,7 +96,7 @@ const Hero = () => {
                   >
                     <div className="absolute inset-0 bg-gradient-to-br from-party-gold/20 to-party-hotpink/20 rounded-full"></div>
                     <img 
-                      src="/lovable-uploads/2cf903d4-8b6e-4e88-b487-edc75db7e4a9.png" 
+                      src="/lovable-uploads/2cf903d4-8b6e-4e88-b487-edc75db7e4a9-removebg-preview.png" 
                       alt="Forty Seven Voices of Kenya Logo" 
                       className="w-full h-full object-cover p-2"
                     />
