@@ -98,4 +98,8 @@
   body {
     @apply bg-background text-foreground;
   }
+   /* Add Cinzel font to headings by default */
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-cinzel;
+  }
 }
