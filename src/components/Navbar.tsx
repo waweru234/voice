@@ -47,7 +47,7 @@ const Navbar = () => {
                 />
               </div>
               <div className="text-party-hotpink text-2xl font-bold tracking-wider">
-                VOICES OF KENYA
+                THE VOICE PARTY
               </div>
             </div>
           </div>
