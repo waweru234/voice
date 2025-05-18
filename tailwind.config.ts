@@ -70,7 +70,7 @@ export default {
 				party: {
 					hotpink: '#FF0B93',
 					lightblue: '#87CEFA',
-					green: '#4CAF50',
+					green: '#228B22',
 					brown: '#795548',
 					white: '#FFFFFF',
 					gold: '#FFD700',
