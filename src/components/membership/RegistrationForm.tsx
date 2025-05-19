@@ -677,6 +677,3 @@ const RegistrationForm = () => {
 
 <<<<<<< HEAD
 export default RegistrationForm;
-=======
-export default RegistrationForm;
->>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
