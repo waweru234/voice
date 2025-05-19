@@ -1,8 +1,13 @@
 
+<<<<<<< HEAD
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import { supabase } from "@/lib/supabase";
 import { generateMembershipNumber } from "@/lib/utils";
+=======
+
+import React, { useState, useEffect } from "react";
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -24,7 +29,11 @@ import { submitToGoogleSheet } from "./GoogleSheetSubmitter";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
+<<<<<<< HEAD
 // ... (keep all your existing county/constituency/ethnicity data)
+=======
+// County and constituency data
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
 const countyConstituencyMap: Record<string, string[]> = {
   "Mombasa": ["Changamwe", "Jomvu", "Kisauni", "Nyali", "Likoni", "Mvita"],
   "Kwale": ["Msambweni", "Lunga Lunga", "Matuga", "Kinango"],
@@ -88,6 +97,7 @@ const ethnicities = [
 ].sort();
 
 const RegistrationForm = () => {
+<<<<<<< HEAD
   const router = useRouter();
   const [step, setStep] = useState<"form" | "password">("form");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -97,6 +107,12 @@ const RegistrationForm = () => {
   const [passwordError, setPasswordError] = useState("");
   const [selectedConstituencies, setSelectedConstituencies] = useState<string[]>([]);
 
+=======
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedConstituencies, setSelectedConstituencies] = useState<string[]>([]);
+
+  // Initialize the form with react-hook-form
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -116,17 +132,29 @@ const RegistrationForm = () => {
     },
   });
 
+<<<<<<< HEAD
   // Watch for county changes
   const selectedCounty = form.watch("county");
   
+=======
+  // Watch for county changes to update constituency options
+  const selectedCounty = form.watch("county");
+  
+  // Update constituencies when county changes
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
   useEffect(() => {
     if (selectedCounty) {
       const constituencies = countyConstituencyMap[selectedCounty] || [];
       setSelectedConstituencies(constituencies);
+<<<<<<< HEAD
+=======
+      // Reset constituency value when county changes
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
       form.setValue("constituency", "");
     }
   }, [selectedCounty, form]);
 
+<<<<<<< HEAD
   // Step 1: Submit personal info
   const handleFormSubmit = async (data: FormData) => {
     setIsSubmitting(true);
@@ -205,6 +233,25 @@ const RegistrationForm = () => {
     } catch (error) {
       console.error("Registration error:", error);
       toast.error("Failed to create account. Please try again.");
+=======
+  // Submit handler
+  const onSubmit = async (data: FormData) => {
+    setIsSubmitting(true);
+    
+    try {
+      // Submit to Google Sheets
+      const success = await submitToGoogleSheet(data);
+      
+      if (success) {
+        toast.success("Registration submitted successfully!");
+        form.reset();
+      } else {
+        toast.error("Failed to submit registration. Please try again.");
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+      toast.error("An error occurred during submission. Please try again.");
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
     } finally {
       setIsSubmitting(false);
     }
@@ -214,6 +261,7 @@ const RegistrationForm = () => {
     <div className="bg-white rounded-xl shadow-xl p-6 md:p-8">
       <h3 className="text-xl font-bold mb-6">Membership Registration</h3>
       
+<<<<<<< HEAD
       {step === "form" ? (
         <Form {...form}>
           <form onSubmit={form.handleSubmit(handleFormSubmit)} className="space-y-6">
@@ -233,6 +281,26 @@ const RegistrationForm = () => {
                 )}
               />
                  <FormField
+=======
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Full Names</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Christopher Waweru" {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            
+            <FormField
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
               control={form.control}
               name="idNumber"
               render={({ field }) => (
@@ -512,6 +580,7 @@ const RegistrationForm = () => {
               </FormItem>
             )}
           />
+<<<<<<< HEAD
               {/* Keep all your other form fields */}
               {/* ... */}
               
@@ -590,8 +659,24 @@ const RegistrationForm = () => {
           </div>
         </div>
       )}
+=======
+          
+          <Button 
+            type="submit" 
+            className="w-full bg-party-gold hover:bg-party-gold/90"
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? "Processing..." : "Submit Registration"}
+          </Button>
+        </form>
+      </Form>
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
     </div>
   );
 };
 
+<<<<<<< HEAD
 export default RegistrationForm;
+=======
+export default RegistrationForm;
+>>>>>>> b06fccbbc363e39cfd222c47d6a0fca4541e43ba
