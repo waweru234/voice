@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 "use client"
 
 import { useState, useEffect } from "react"
@@ -54,7 +54,7 @@ const Navbar = () => {
         scrolled ? "bg-white/95 backdrop-blur-sm shadow-md py-2" : "bg-white py-4"
       }`}
     >
-=======
+
 
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
@@ -92,13 +92,13 @@ const Navbar = () => {
     <nav className={`fixed w-full z-50 transition-all duration-300 ${
       scrolled ? 'bg-white/95 backdrop-blur-sm shadow-md py-2' : 'bg-white py-4'
     }`}>
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
+
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center">
           <div className="flex items-center">
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-full overflow-hidden">
-<<<<<<< HEAD
+
                 <img
                   src="/lovable-uploads/vok.png"
                   alt="Forty Seven Voices of Kenya"
@@ -201,7 +201,7 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <Button
-=======
+
                 <img 
                   src="/lovable-uploads/vok.png" 
                   alt="Forty Seven Voices of Kenya" 
@@ -274,7 +274,6 @@ const Navbar = () => {
           {/* Mobile Menu Button */}
           <div className="md:hidden">
             <Button 
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
               variant="ghost"
               size="icon"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -284,16 +283,12 @@ const Navbar = () => {
             </Button>
           </div>
         </div>
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
         {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div className="mt-4 md:hidden bg-white rounded-lg shadow-xl border border-gray-100 animate-fade-in">
             <div className="flex flex-col p-4 space-y-2">
-<<<<<<< HEAD
+
               <Button
                 variant="ghost"
                 className="text-gray-800 font-medium w-full text-left justify-start hover:bg-party-gold/10 hover:text-party-gold"
@@ -379,7 +374,7 @@ const Navbar = () => {
                   </Button>
                 </>
               )}
-=======
+
               <Button 
                 variant="ghost" 
                 className="text-gray-800 font-medium w-full text-left justify-start hover:bg-party-gold/10 hover:text-party-gold"
@@ -435,20 +430,20 @@ const Navbar = () => {
               >
                 Support the Movement
               </Button>
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
+
             </div>
           </div>
         )}
       </div>
     </nav>
-<<<<<<< HEAD
+
   )
 }
 
 export default Navbar
-=======
+
   );
 };
 
 export default Navbar;
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
+
