@@ -34,7 +34,7 @@ const App = () => (
 )
 
 export default App
-=======
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -62,4 +62,4 @@ const App = () => (
 );
 
 export default App;
->>>>>>> 24d3fc179a2adb89f949ed1da0a0f4fc3d30d8cc
+
